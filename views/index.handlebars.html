@@ -1,0 +1,46 @@
+<link rel="stylesheet" href="/css/style.css">
+<title>Chat</title>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="chats" aria-labelledby="chatsLabel" style="user-select: none;">
+    <div class="offcanvas-header">
+        <h2 class="offcanvas-title" id="chatsLabel">Seus contatos</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+       
+            
+            <button class="btn btn-success" id="newChat"><h4 style="font-size: calc(0.8vw + 10pt);">Novo grupo</h4></button>
+            <button class="btn btn-danger" onclick="deslog()"><h4 style="font-size: calc(0.8vw + 10pt);">Deslogar</h4></button>
+            
+            <br> <br>
+            <div style="width: fit-content;">
+                <h4>Ping</h4>
+                <input id='ping' type="number" class="form-control form-control-sm" placeholder="5 - 100">
+            </div>
+            
+
+            <hr>
+
+            {{#each chats}}
+            <div style="max-width: 90%;" class="btn btn-secondary" id="{{id}}" data-bs-dismiss="offcanvas" onclick="changeChat(this.id, this.innerHTML, this.children);">
+                {{#if name}}
+                    <h4 style="display: inline-block; font-size: calc(1vw + 5pt);"> {{name}} </h4>
+                {{else}}
+                {{#each group}}
+                    <h4 style="text-decoration: {{text}}; font-size: calc(1vw + 5pt); display: inline-block;"> {{name}} </h4>
+                {{/each}}
+                {{/if}}
+                
+                {{#each group}}
+                    <h4 style="text-decoration: {{text}}; font-size: calc(1vw + 5pt); display: inline-block; visibility: hidden; width: 0px; height: 0px; position: absolute;" is_admin="{{is_admin}}" id="{{id}}">
+                        {{name}}
+                    </h4>
+                {{/each}}
+            </div> 
+            <span id="chatDate{{id}}" style="width: 0px; height: 0px; visibility: hidden; position: absolute;">{{date}}</span>
+            <br> <br>
+
+            {{/each}}
+        
+    </div>
+</div>
