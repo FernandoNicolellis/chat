@@ -11,8 +11,9 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 // ---- Handlebars ----
 const { engine } = require("express-handlebars")
-app.set("view engine", "handlebars")
-app.engine("handlebars", engine({defaultLayout: 'main'}))
+// Register the engine for files with the existing `.handlebars.html` extension
+app.engine("handlebars.html", engine({ extname: '.handlebars.html', defaultLayout: 'main' }))
+app.set("view engine", "handlebars.html")
 
 // ---- Body Parser ----
 app.use(express.urlencoded({extended: true}))
