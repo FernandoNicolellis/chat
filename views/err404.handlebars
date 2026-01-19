@@ -1,0 +1,52 @@
+<style>
+    body {
+        background-color: rgba(237, 41, 38, 0.888);
+    }
+    h1 {
+        font-family: 'Courier New', Courier, monospace;
+    }
+    a {
+        color: black;
+        font-weight: 400;
+    }
+    .box {
+        width: fit-content;
+        height: fit-content;
+        padding: 25px;
+        border-radius: 5px;
+        border: 1px solid white;
+        text-align: center;
+    }
+    .container {
+        display: flex;
+        width: 100%;
+        height: fit-content;
+
+        align-items: center;
+        justify-content: center;
+        
+        flex-wrap: wrap;
+
+        position: absolute; 
+        top: 0; left: 0; right: 0; bottom: 0;
+        margin-top: auto;
+        margin-bottom: auto;
+        
+    }
+    .link {
+        width: 100%;
+        text-align: center;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: 600;
+    }
+</style>
+
+<div class="container">
+    <h4 class="link">{{link}}</h4> 
+    <div class="box">
+        <h1>Link inválido</h1>
+        <a href="/register/login/"><h2>Clique aqui para voltar - Registro</h2></a>
+        <a href="/login/"><h2>Clique aqui para voltar - Login</h2></a>
+    </div>
+</div>
+
