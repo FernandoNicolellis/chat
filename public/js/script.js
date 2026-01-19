@@ -9,9 +9,16 @@ const DOM = {
     peopleOnGroup: document.querySelector(".peopleOnGroup"),
     delPpl: document.querySelector("#delPpl")
 }
+
+// Defensive guards: ensure DOM elements exist before using them
+for (const k in DOM) {
+    if (!DOM[k]) DOM[k] = null
+}
 const LINK = 'http://localhost:1111/'
-const all = DOM.all.innerHTML.split(',')
-all.map((v, i) => all[i] = v.trim())
+let all = []
+if (DOM.all && DOM.all.innerHTML) {
+    all = DOM.all.innerHTML.split(',').map(v => v.trim())
+}
 
 function autoComplete (each) {
     return all.filter(val => {
@@ -68,68 +75,62 @@ window.addEventListener("load", () => {
     
 })
 
-DOM.newChatPeople.addEventListener("keyup", () => {
-    DOM.sugest.innerHTML = ''
-    if (DOM.newChatPeople.value != '') {
-        autoComplete(DOM.newChatPeople.value).map(vs => 
-            DOM.sugest.innerHTML += "<div class='choosePerson'  onclick='DOM.newChatPeople.value = this.children[0].innerHTML; removeChildren(DOM.sugest)'> <h5>" + vs + "</h5></div>"
-        )
-    }   
-    else DOM.sugest.innerHTML = ''
-})
+if (DOM.newChatPeople && DOM.sugest) {
+    DOM.newChatPeople.addEventListener("keyup", () => {
+        DOM.sugest.innerHTML = ''
+        if (DOM.newChatPeople.value != '') {
+            autoComplete(DOM.newChatPeople.value).map(vs => 
+                DOM.sugest.innerHTML += "<div class='choosePerson'  onclick='DOM.newChatPeople.value = this.children[0].innerHTML; removeChildren(DOM.sugest)'> <h5>" + vs + "</h5></div>"
+            )
+        }   
+        else DOM.sugest.innerHTML = ''
+    })
+}
 
 
-DOM.okAdd.addEventListener("click", () => {
-    if (all.includes(DOM.newChatPeople.value) && DOM.newChatPeople.value != '') {
-        fetch("/addChatPeople", {
-            method: "post",
-            headers: {
-                'Content-Type': "application/json"
-            },
-            body: JSON.stringify({
-                ppl: DOM.newChatPeople.value
+if (DOM.okAdd) {
+    DOM.okAdd.addEventListener("click", () => {
+        if (DOM.newChatPeople && all.includes(DOM.newChatPeople.value) && DOM.newChatPeople.value != '') {
+            fetch("/addChatPeople", {
+                method: "post",
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                body: JSON.stringify({ ppl: DOM.newChatPeople.value })
+            }).then(res => res.json()).then(rep => {
+                if (!rep.rep) window.location.replace(LINK+"?o=true")
             })
-        }).then(res => res.json()).then(rep => {
-            if (!rep.rep) window.location.replace(LINK+"?o=true")
-        })
-    }
-})
+        }
+    })
+}
 
-DOM.admAdd.addEventListener('click', () => {
-    if (all.includes(DOM.newChatPeople.value) && DOM.newChatPeople.value != '') {
-        fetch("/admAdd", {
-            method: "post",
-            headers: {
-                'Content-Type': "application/json"
-            },
-            body: JSON.stringify({
-                ppl: DOM.newChatPeople.value
+if (DOM.admAdd) {
+    DOM.admAdd.addEventListener('click', () => {
+        if (DOM.newChatPeople && all.includes(DOM.newChatPeople.value) && DOM.newChatPeople.value != '') {
+            fetch("/admAdd", {
+                method: "post",
+                headers: { 'Content-Type': "application/json" },
+                body: JSON.stringify({ ppl: DOM.newChatPeople.value })
+            }).then(res => res.json()).then(rep => {
+                if (!rep.rep) window.location.replace(LINK + "?o=true")
             })
-        }).then(res => res.json()).then(rep => {
-            if (!rep.rep) {
-                window.location.replace(LINK + "?o=true")
-            }
-        })
-    }
-})
+        }
+    })
+}
 
-DOM.delPpl.addEventListener('click', () => {
-    if (all.includes(DOM.newChatPeople.value) && DOM.newChatPeople.value != '') {
-        fetch("/delPpl", {
-            method: "post",
-            headers: {
-                'Content-Type': "application/json"
-            },
-            body: JSON.stringify({
-                ppl: DOM.newChatPeople.value
+if (DOM.delPpl) {
+    DOM.delPpl.addEventListener('click', () => {
+        if (DOM.newChatPeople && all.includes(DOM.newChatPeople.value) && DOM.newChatPeople.value != '') {
+            fetch("/delPpl", {
+                method: "post",
+                headers: { 'Content-Type': "application/json" },
+                body: JSON.stringify({ ppl: DOM.newChatPeople.value })
+            }).then(res => res.json()).then(rep => {
+                if (!rep.rep) window.location.replace(LINK + "?o=true")
             })
-        }).then(res => res.json()).then(rep => {
-            if (!rep.rep) {
-                window.location.replace(LINK + "?o=true")
-            }
-        })
-    }
-})
+        }
+    })
+}
 
 let msgAtual = []
 
