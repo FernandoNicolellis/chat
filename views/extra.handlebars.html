@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" placeholder="SENHA" id="password">
+    <button id="btn">Enviar</button>
+    <script>
+        document.querySelector("#btn").addEventListener("click", () => {
+            console.log('a')
+            const password = document.querySelector("#password").value
+            fetch("/extra", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({password})
+            })//.then(res => res.json()).then(data => {
+                //if(data.success) {
+                //    window.location.replace("/admin")
+               // }
+            //})
+        })
+    </script>
+</body>
+</html>

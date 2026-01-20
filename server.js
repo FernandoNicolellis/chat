@@ -173,7 +173,7 @@ function displayDate(date) {
     else if (given == yester) return 'Ontem'
     else return given
 }
-const AdminID = 1
+// const AdminID = 1
 // ---- Routes ----
 
 app.get('/', (req, res) => { 
@@ -244,7 +244,9 @@ app.get('/', (req, res) => {
                         User.findAll().then(res => {
                             var arr = []
                             res.map(val => {
-                                if (val.id != AdminID) arr.push({ppl: val.name})
+                                //console.log(val.name)
+                                //if (val.id != AdminID) 
+                                arr.push({ppl: val.name})
                             })
                             return arr
     
@@ -259,6 +261,14 @@ app.get('/', (req, res) => {
             }  
         })   
     }
+})
+
+app.get('/extra', (req, res) => {
+    res.render("extra")
+})
+app.post('/extra', (req, res) => {
+    console.log(req.body.password == "Fenico123")
+    //res.render("err")
 })
 
 app.post('/render', async (req, ent) => {
@@ -386,7 +396,7 @@ app.post('/change_chat', (req, res) => {
 })
 
 app.post('/new_msg', (req, res) => {
-    if (req.session.chat != undefined && req.session.userid != AdminID) {
+    if (req.session.chat != undefined /*&& req.session.userid != AdminID*/) {
         newMsg(req.body.text, req.session.userid, req.session.chat) // Antes do cara mandar a msg, ele tem que mudar o chat né
     }
     else {
@@ -404,12 +414,11 @@ app.post('/newChat', (req, res) => {
 
         if (IDs.length <= 0) var HigherChat = 0
         else var HigherChat = Math.max.apply(null, IDs) 
-
-        if (req.session.userid != AdminID) {
+       // if (req.session.userid != AdminID) {
             newChat(HigherChat + 1, req.session.userid, true)
-            newChat(HigherChat + 1, AdminID, 2)
+            //newChat(HigherChat + 1, AdminID, 2)
             req.session.chat = HigherChat + 1
-        }
+        //}
         
     }).then(() => {res.send()})
     
@@ -473,9 +482,9 @@ app.post('/delMe', (req, resp) => {
         return Chats.findOne({where: [{id: req.session.chat}, {included_id: req.session.userid}]}).then(is => {
             if (res.length <= 1 && is.is_admin) {
                 return Chats.findAll({where: {id: req.session.chat}}).then(ppl => {
-                    if (ppl.length <= 2 && req.session.userid != AdminID) {
+                    if (ppl.length <= 2 /* && req.session.userid != AdminID */ ) {
                         Chats.destroy({where: [{id: req.session.chat}, {included_id: req.session.userid}]})
-                        Chats.destroy({where: [{id: req.session.chat}, {included_id: AdminID}]})
+                        //Chats.destroy({where: [{id: req.session.chat}, {included_id: AdminID}]})
                         Msg.destroy({where: {chat_id: req.session.chat}})
                         req.session.chat = undefined
                         return false

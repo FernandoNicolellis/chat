@@ -293,28 +293,22 @@ if (document.querySelector("p#reloadP").innerHTML == '' || document.querySelecto
 
 
 
-let ping = 50
-const inputPing = document.querySelector("input#ping")
-inputPing.addEventListener('keyup', () => {
-    if (inputPing.value >= 5 && inputPing.value<= 100) {
-        ping = Number(inputPing.value)
-        clearInterval(msgInterval)
-        msgInterval = setInterval(() => {
-            renderMsg( maxScroll(), false )
-        }, ping);
-    }
-    else ping = 50
-})
+
+
+
 renderMsg( true )
 
+let ping = 50
 let msgInterval = setInterval(() => {
     renderMsg( maxScroll(), false )
 }, ping);
 
-
 document.querySelector("#newChat").addEventListener("click", () => {
     fetch("/newChat", {method: "post"}).then(() => {
-        window.location.replace(LINK)
+        setTimeout(() => {
+            window.location.replace(LINK) // Tem como fazer sem o timeout.. ou nem precisa? // e esse bagulho dos erros
+        }, 200)
+        
     })  
 })
 
