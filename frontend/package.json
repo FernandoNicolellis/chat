@@ -1,0 +1,16 @@
+{
+  "name": "chatpro-frontend",
+  "version": "1.0.0",
+  "description": "Electron frontend for chatPro app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "bootstrap": "^5.3.2"
+  },
+  "devDependencies": {
+    "electron": "^29.2.0"
+  }
+}
