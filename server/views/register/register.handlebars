@@ -1,0 +1,81 @@
+<title>Registro</title>
+
+<div class="container">
+
+    <div id="response-container">
+        <br>
+    </div>
+
+    <h1>Registre-se</h1>
+    
+    <br>
+
+    <div class="card">
+        <div class="card-body">
+            <label>Nome completo:</label>
+            <input type="text" id="name" placeholder="Seu primeiro nome" class="form-control"> <!-- email -->
+            <br>
+
+            <label>Email:</label>
+            <input type="text" id="email" placeholder="Seu email" class="form-control"> <!-- email -->
+            <br>
+
+            <label>Senha:</label>
+            <div class="input-group flex-nowrap">
+                <div class="input-group-text"><input class="form-check-input mt-0" type="checkbox" id="check"></div>
+                <input type="password" class="form-control" placeholder="Sua senha" id="pass"> <!-- pass -->
+            </div> 
+            <br>
+
+            <label>Senha repetida:</label>
+            <div class="input-group flex-nowrap">
+                <div class="input-group-text"><input class="form-check-input mt-0" type="checkbox" id="check_rep"></div>
+                <input type="password" class="form-control" placeholder="Repita sua senha" id="pass_rep"> <!-- pass-rep -->
+            </div> 
+            <br>
+
+            <button id="submit" class="btn btn-success">Criar conta</button>
+
+        </div>
+    </div>
+    <br>
+    <a href="/login"><h3>Já possuo uma conta</h3></a>
+</div>
+
+
+<script>
+    const scope = () => {
+        document.querySelector("#submit").addEventListener("click", () => {
+
+            var name = document.querySelector("#name").value
+            var email = document.querySelector("#email").value
+            var pass = document.querySelector("#pass").value
+            var pass_rep = document.querySelector("#pass_rep").value
+
+    
+            fetch("/register/new_register", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name, 
+                    email: email,
+                    pass: pass,
+                    pass_rep: pass_rep
+                })
+            }).then(res => res.json()).then(values => {
+                document.querySelector("#response-container").innerHTML = "<br>"
+                values.data.map(data => {  
+                    document.querySelector("#response-container").innerHTML += "<div class='" + data.classes + "'><h2>" + data.text + "</h2></div>"
+                }) 
+            })
+        })
+
+        
+        show_pass("check", "pass")
+        show_pass("check_rep", "pass_rep")
+    }
+    scope()
+    
+</script>

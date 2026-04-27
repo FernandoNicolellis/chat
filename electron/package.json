@@ -1,0 +1,49 @@
+{
+  "name": "chatpro-electron",
+  "version": "1.0.0",
+  "description": "ChatPro Electron client",
+  "author": "ferna",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "build": "electron-builder",
+    "build:signed": "electron-builder --win nsis --publish never -c.forceCodeSigning=true"
+  },
+  "build": {
+    "appId": "com.yourname.chatpro",
+    "productName": "ChatPro",
+    "extraResources": [
+      {
+        "from": "build",
+        "to": "build",
+        "filter": [
+          "iconMsg*.png"
+        ]
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "signAndEditExecutable": true,
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "ChatPro",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico"
+    }
+  },
+  "dependencies": {
+    "electron-store": "^8.2.0",
+    "keytar": "^7.9.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "electron": "^40.2.1",
+    "electron-builder": "^26.7.0"
+  }
+}

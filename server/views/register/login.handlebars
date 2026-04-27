@@ -1,0 +1,133 @@
+<title>Login</title>
+<div class="container">
+
+    <div id="response-container">
+        <br>
+    </div>
+
+    <h1>Faça seu login</h1>
+
+    <br>
+
+    <div class="card">
+        <div class="card-body">
+            <label>Email:</label>
+            <input type="text" id="email" placeholder="Seu email" class="form-control" value="{{email}}"> <!-- email -->
+            <br>
+
+            <label>Senha:</label>
+            <div class="input-group flex-nowrap">
+                <div class="input-group-text"><input class="form-check-input mt-0" type="checkbox" id="check"></div>
+                <input type="password" class="form-control" placeholder="Sua senha" id="pass" value="{{pass}}"> <!-- pass -->
+            </div> 
+            <br>
+
+            <div class="btn-group">
+                <button id="submit" class="btn btn-success">Entrar na conta</button>     
+            </div>
+
+            <br>
+            <br>
+            
+            <input class="form-check-input" type="checkbox" checked="checked" id="save">
+            <label class="form-check-label">
+                Salvar login
+            </label>         
+        </div>
+    </div>
+    <br>
+    <a href="/register/0"><h3>Criar uma conta</h3></a>
+</div>
+
+
+<script>
+    const scope = () => {
+        const emailInput = document.querySelector("#email")
+        const passInput = document.querySelector("#pass")
+        const saveCheck = document.querySelector("#save")
+        const submitBtn = document.querySelector("#submit")
+        let rememberedEmail = ""
+
+        const loadElectronCredentials = async () => {
+            if (!window.credentials) return
+            try {
+                const savedEmail = await window.credentials.loadEmail()
+                if (!savedEmail) return
+                rememberedEmail = savedEmail
+                emailInput.value = savedEmail
+                const savedPassword = await window.credentials.loadPassword(savedEmail)
+                if (savedPassword) {
+                    passInput.value = savedPassword
+                    saveCheck.checked = true
+                }
+            } catch (err) {
+                console.error("Failed to load saved credentials:", err)
+            }
+        }
+
+        const persistElectronCredentials = async (email, pass, shouldSave) => {
+            if (!window.credentials) return
+            try {
+                if (shouldSave) {
+                    if (rememberedEmail && rememberedEmail !== email) {
+                        await window.credentials.deletePassword(rememberedEmail)
+                    }
+                    await window.credentials.saveEmail(email)
+                    await window.credentials.savePassword(email, pass)
+                    rememberedEmail = email
+                }
+                else {
+                    const prevEmail = rememberedEmail || await window.credentials.loadEmail()
+                    if (prevEmail) await window.credentials.deletePassword(prevEmail)
+                    await window.credentials.deletePassword(email)
+                    await window.credentials.clearEmail()
+                    rememberedEmail = ""
+                }
+            } catch (err) {
+                console.error("Failed to persist credentials:", err)
+            }
+        }
+
+        submitBtn.addEventListener("click", () => {
+            const email = emailInput.value
+            const pass = passInput.value
+
+            fetch("/login/new_login", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({    
+                    email: email,
+                    pass: pass,
+                    check: saveCheck.checked
+                })
+            }).then(res => res.json()).then(async values => {
+                if (values.boss) {
+                    await persistElectronCredentials(email, pass, saveCheck.checked)
+                    window.location.replace("/boss")
+                }
+                else {
+                    document.querySelector("#response-container").innerHTML = "<br>"
+                    const messages = Array.isArray(values.data) ? values.data : []
+                    for (const data of messages) {
+                        if (data.text == "script") {
+                            await persistElectronCredentials(email, pass, saveCheck.checked)
+                            window.location.replace("/")
+                            return
+                        }
+                        document.querySelector("#response-container").innerHTML += "<div class='" + data.classes + "'><h2>" + data.text + "</h2></div>"
+                    }
+                }
+                
+            })
+        })
+
+        
+        show_pass("check", "pass")
+        loadElectronCredentials()
+        
+    }
+    scope()
+    
+</script>

@@ -1,0 +1,469 @@
+* {
+    margin: 0;
+}
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.flex {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center; /* para texto usa vw */
+}
+
+.msg-container {
+    height: 100%;
+    width: 45%;
+
+    background-color: rgb(28, 28, 28);
+    display: flex;
+    flex-direction: column;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    visibility: hidden;
+}
+
+.overflow {
+    width: 100%;
+    flex: 1 1 auto;
+    height: auto;
+    overflow-y: scroll;
+
+    background-color: rgb(74, 133, 187);
+    background-image: url("/img/background.png");
+    background-repeat: repeat;
+
+}
+
+.msg_1 {
+    width: fit-content;
+    height: fit-content;
+    max-width: 80%;
+    background-color: rgb(39 39 39);
+    border-radius: 5px;
+    padding: 5px;
+    margin-right: auto;
+    margin-left: 2%;
+    margin-bottom: 1%;
+    border: 1px solid black;
+}
+
+.msg_1 > span:first-child,
+.img1 > span:first-child {
+    font-size: clamp(15px, 1.8vw, 22px);
+    font-weight: 600;
+    display: inline-block;
+}
+
+.msg_2 {
+    width: fit-content;
+    height: fit-content;
+    max-width: 80%;
+    background-color: #016701;
+    border-radius: 3px;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: 2%;
+    margin-bottom: 1%;
+    border: 1px solid black;
+}
+
+.submit {
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(21, 109, 198, 0.212);
+
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 10px 0 12px;
+
+}
+
+
+.inpg {
+    width: min(95%, 900px);
+    height: clamp(40px, 4.2vh, 58px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 auto;
+}
+
+.text {
+    resize: none;
+    font-size: clamp(13px, 1.4vw, 18px);
+    height: 100%;
+    flex: 1 1 auto;
+    border-radius: 10px !important;
+    padding: 8px 10px;
+}
+
+.submit-text {
+    flex: 0 0 auto;
+    width: clamp(40px, 3.2vw, 52px);
+    height: clamp(40px, 3.2vw, 52px);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-radius: 999px !important;
+    margin-left: 0 !important;
+    border-top-left-radius: 999px !important;
+    border-bottom-left-radius: 999px !important;
+    border-top-right-radius: 999px !important;
+    border-bottom-right-radius: 999px !important;
+    white-space: nowrap;
+}
+
+.send-icon {
+    width: 56%;
+    height: 56%;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+    object-position: center;
+    pointer-events: none;
+}
+.msg_text {
+    color: white;
+    font-size: clamp(14px, 1.5vw, 20px);
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+
+
+.ceil {
+    display: flex;
+    width: 100%;
+    height: auto;
+
+    justify-content: center;
+    
+   
+}
+.bottom_ceil {
+    width: 100%;
+    height: auto;
+
+    display: flex;
+
+    position: fixed;
+    top: 0; left: 0;
+
+    justify-content: center;
+}
+
+
+#ctt {
+    width: fit-content;
+    max-width: 70%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 4px 8px;
+}
+
+#ctt h4,
+#ctt h5,
+#ctt h6 {
+    font-size: clamp(16px, 2.1vw, 22px) !important;
+    margin: 0;
+    line-height: 1.2;
+}
+
+
+.choosePerson {
+    width: auto;
+    border-radius: 3px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+.choosePerson:hover {
+    background-color: rgba(21, 109, 198, 0.212);
+}
+
+.time {
+    color: white;
+    font-size: clamp(11px, 1.1vw, 16px);
+
+    margin-left: 5px;
+    padding-right: 5px;
+    height: 5px;
+
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.day {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+
+    height: 30px;
+    background-color: rgba(82, 82, 82, 0.664);
+    text-align: center;
+    margin-bottom: 1%;
+
+    border-radius: 5px;
+}
+.dayText {
+    font-size: clamp(14px, 1.8vw, 20px);
+    color: black;
+    font-weight: 500;
+
+}
+
+.img1 {
+    width: fit-content;
+    height: fit-content;
+    padding: 8px;
+    
+    border-radius: 10px;
+
+    margin-right: auto;
+    margin-left: 2%;
+    margin-bottom: 1%;
+
+    width: clamp(120px, 35%, 320px);
+
+    background-color: rgb(39 39 39);
+    border: 1px solid black;
+}
+.img2 {
+    width: fit-content;
+    height: fit-content;
+    padding: 8px;
+    
+    border: 1px solid black;
+    background-color: #016701;
+    border-radius: 10px;
+
+    margin-left: auto;
+    margin-right: 2%;
+    margin-bottom: 1%;
+
+    width: clamp(120px, 35%, 320px);
+}
+
+a.fileA {
+    font-size: clamp(13px, 1.4vw, 18px);
+    font-family: Arial, Helvetica, sans-serif;
+}
+a.fileAsm {
+    margin-top: 1%;
+}
+
+span.fileDlw {
+    color: white;
+    font-size: clamp(12px, 1.2vw, 16px);
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+}
+
+form#fileForm {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: flex;
+    gap: 8px;
+    width: min(95%, 900px);
+    align-items: stretch;
+    flex-wrap: nowrap;
+    margin-left: auto;
+    margin-right: auto;
+    height: 34px;
+}
+button#fileBtn {
+    height: 100%;
+    min-width: 48px;
+    padding: 0 14px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.fileSize {
+    flex: 1 1 auto;
+    margin: 0;
+}
+
+#okAdd {
+    border-top-left-radius: 6px !important;
+    border-bottom-left-radius: 6px !important;
+}
+
+#delPpl {
+    border-top-right-radius: 6px !important;
+    border-bottom-right-radius: 6px !important;
+}
+
+#file {
+    width: 100%;
+    height: 100%;
+}
+
+
+#goDown {
+    font-size: 0;
+    color: transparent;
+    width: clamp(40px, 3.2vw, 52px);
+    height: clamp(40px, 3.2vw, 52px);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #0d6efd;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    margin: 0;
+    margin-left: 2px;
+    cursor: pointer;
+    user-select: none;
+    line-height: 1;
+
+}
+
+#goDown:hover {
+    filter: brightness(1.08);
+}
+
+#goDown::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: calc(50% - 9px);
+    width: 10px;
+    height: 10px;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    transform: translateX(-50%) rotate(45deg);
+    border-radius: 1px;
+    pointer-events: none;
+}
+
+#goDown::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: calc(50% - 1px);
+    width: 10px;
+    height: 10px;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    transform: translateX(-50%) rotate(45deg);
+    border-radius: 1px;
+    pointer-events: none;
+}
+
+
+.delMsg {
+
+    display: inline-flex;
+    cursor: pointer;
+    user-select: none;
+}
+
+.deletedMsg {
+    color: rgb(91, 91, 91);
+}
+
+
+.displayIMG {
+    width: 100%;
+    padding: 1%;
+}
+
+
+.offcanvas {
+    width: 26.5%;
+} 
+
+@media (max-width: 800px) {
+    .msg-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .overflow {
+        flex: 1 1 auto;
+        height: auto;
+    }
+
+    .submit {
+        flex: 0 0 auto;
+        height: auto;
+        min-height: 70px;
+    }
+
+    .inpg {
+        width: 95%;
+    }
+
+    form#fileForm {
+        width: 95%;
+    }
+
+    .offcanvas {
+        width: 80%;
+    }
+
+    .offcanvas-title {
+        font-size: clamp(18px, 4.5vw, 28px);
+    }
+
+    .offcanvas h4 {
+        font-size: clamp(14px, 4vw, 22px) !important;
+    }
+
+    #callOffCanvas1 {
+        width: clamp(28px, 8vw, 44px) !important;
+        margin-top: 28px !important;
+    }
+
+    #this_chat .input-group {
+        flex-wrap: wrap;
+    }
+
+    #newChatPeople {
+        flex: 1 1 100%;
+        width: 100%;
+        height: 34px;
+    }
+
+    #okAdd,
+    #admAdd {
+        flex: 1 1 30%;
+        margin-top: 6px;
+        min-width: 100px;
+        padding: 6px 10px;
+        line-height: 1;
+    }
+
+    #delPpl {
+        flex: 0 0 auto;
+        margin-top: 6px;
+        min-width: 40px;
+        padding: 6px 10px;
+        line-height: 1;
+    }
+}
