@@ -4,6 +4,8 @@ console.clear()
 const express = require("express")
 const app = express()
 const http = require("http")
+const path = require("path")
+const fs = require("fs")
 const port = 1111
 const adminID = 10000
 
@@ -30,19 +32,24 @@ function justifyDate (date) {
     + date.getMinutes() + '-' + date.getSeconds() + '_' + date.getMilliseconds() + '-'
 }
 const multer = require("multer")
+const uploadDir = path.join(__dirname, "uploads", "files")
+fs.mkdirSync(uploadDir, { recursive: true })
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/files')
+        cb(null, uploadDir)
     },
     filename: (req, file, cb) => {
-        let date;
-        if (req.session.userid == 10000 || req.session.userid == undefined || req.session.chatId == undefined) return
+        let date
+        if (req.session.userid == 10000 || req.session.userid == undefined || req.session.chat == undefined) {
+            return cb(new Error("Invalid upload session"))
+        }
         User.findOne({where: {id: req.session.userid}}).then(res => {
+            let fileType
             if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') fileType = 1
             else fileType = 2
             date = justifyDate(new Date())
             file.originalname = file.originalname.replace(/ /g, "")
-            Msg.create({
+            return Msg.create({
                 text: date + file.originalname,
                 type: fileType,
                 sender_id: req.session.userid,
@@ -53,6 +60,8 @@ const storage = multer.diskStorage({
         }).then(() => {
             file.originalname = date + file.originalname
             cb(null, file.originalname)
+        }).catch(err => {
+            cb(err)
         })
     }
 
@@ -609,7 +618,7 @@ app.post('/new_msg', async (req, res) => {
         })
         await User.findOne({where: {id: req.session.userid}}).then(user => sender_name = user.name )
 
-        await Chats.findAll({where: {id: req.session.chat}})
+        return await Chats.findAll({where: {id: req.session.chat}})
         .then(res => {
             res.push({included_id: adminID}) // Para o admin receber a mensagem via socket, já que ele não tem registros na tabela de chats
             res.map(val => {
@@ -617,7 +626,7 @@ app.post('/new_msg', async (req, res) => {
                 
             })
         }).then(() => {
-            res.send()
+            return res.send()
         })
     }
     else {
@@ -627,16 +636,15 @@ app.post('/new_msg', async (req, res) => {
 })
 
 app.post('/fileUpload', upload.single('file'), async (req, res) => {
-    if (req.session.chat != undefined && req.session.userid != adminID) {
-        await Chats.findOne({where: [{id: req.session.chat}]}).then(res => {
-            if (res.name == null || res.name == '' || res.name == undefined) {
-                if (res.chatType == 1) chatName = "Privado"
-                else chatName = "Grupo sem nome"
-            }
-            else chatName = res.name
-        })
+    let sender_name = ''
+    let chatName = ''
 
-        
+    if (req.session.chat == undefined || req.session.userid == adminID) {
+        console.log("Chat indefinido || Admin nao pode enviar mensagens")
+        return res.status(400).send()
+    }
+
+    if (req.session.chat != undefined && req.session.userid != adminID) {
         await Chats.findOne({where: [{id: req.session.chat}]}).then(res => {
             if (res.name == null || res.name == '' || res.name == undefined) {
                 if (res.chatType == 1) chatName = "Privado"
@@ -646,20 +654,20 @@ app.post('/fileUpload', upload.single('file'), async (req, res) => {
         })
         await User.findOne({where: {id: req.session.userid}}).then(user => sender_name = user.name )
 
-        await Chats.findAll({where: {id: req.session.chat}})
+        return await Chats.findAll({where: {id: req.session.chat}})
         .then(res => {
             res.push({included_id: adminID})
             res.map(val => {
                 if (req.file != undefined) io.to("user:"+val.included_id).emit("newMessage", { chatId: req.session.chat, chatName: chatName, sender_name: sender_name, text: req.body.text });
             })
         }).then(() => {
-            res.send()
+            return res.send()
         })
     }
     else {
         console.log("Chat indefinido || Admin não pode enviar mensagens")
     }
-    res.send()
+    return res.send()
 })
 
 app.post('/newChat', (req, res) => {

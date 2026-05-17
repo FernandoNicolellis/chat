@@ -619,20 +619,24 @@ document.querySelector("#delMe").addEventListener("click", () => {
 const file = document.querySelector("#file")
 const formFile = document.querySelector("#fileForm")
 
-formFile.addEventListener("submit", e => {
+formFile?.addEventListener("submit", e => {
     e.preventDefault()
 
+    if (!file?.files?.length) return
+    
     const formData = new FormData()
     formData.append('file', file.files[0])
 
     fetch('/fileUpload', {
         method: 'post',
         body: formData   
-    }).then(()=> {
+    }).then(res => {
+        if (!res.ok) throw new Error("File upload failed")
         file.value = ''
+        renderMsg(true)
+    }).catch(err => {
+        console.error(err)
     })
-    
-    
 })
 
 document.querySelector("#goDown").addEventListener("click", () => {

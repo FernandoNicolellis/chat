@@ -6,7 +6,8 @@ const { spawn } = require("child_process");
 const Store = require("electron-store");
 const keytar = require("keytar");
 
-const URL = "http://62.146.177.17:1111/"
+//const URL = "http://62.146.177.17:1111/"
+const URL = "http://localhost:1111"
 
 let mainWindow;
 let tray = null;
