@@ -1,7 +1,7 @@
 require('dotenv').config()
 const Sequelize = require("sequelize")
 
-const dbName = process.env.DB_NAME || "fechat"
+const dbName = process.env.DB_NAME || "chat"
 const dbUser = process.env.DB_USER || "root"
 const dbPass = process.env.DB_PASS || ""
 const dbHost = process.env.DB_HOST || "localhost"

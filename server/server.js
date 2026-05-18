@@ -96,7 +96,7 @@ const Msg = require("./database/msg")
 // ---- Essenciais ----
 // Melhorar o CSS
 // Exibir o nome do arquivo no envio
-// Quando alguem sair do chatPRO, da pro
+// Quando alguem sair do chat, da pro
 
 // ---- Não essenciais ----
 // O bgl de recarregar a pagina só existe quando adiciona alguem a um grupo, nao quando tira alguem ou transforma em adm 

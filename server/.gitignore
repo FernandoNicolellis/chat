@@ -12,6 +12,7 @@ node_modules
 dist
 dist-ssr
 coverage
+uploads/files/*
 *.local
 .env
 .env.*.local

@@ -27,7 +27,7 @@ npm run build:signed
 ## Verify signature
 
 ```powershell
-Get-AuthenticodeSignature ".\dist\ChatPro Setup 1.0.0.exe" | Format-List Status,StatusMessage,SignerCertificate
+Get-AuthenticodeSignature ".\dist\chat Setup 1.0.0.exe" | Format-List Status,StatusMessage,SignerCertificate
 ```
 
 Expected `Status`: `Valid` (for signed build).

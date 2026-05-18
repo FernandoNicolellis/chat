@@ -15,7 +15,7 @@ let isQuitting = false;
 let activeNotifications = [];
 const gotSingleInstanceLock = app.requestSingleInstanceLock();
 const store = new Store();
-const KEYTAR_SERVICE = "ChatPro";
+const KEYTAR_SERVICE = "chat";
 
 // Prevent multiple app instances; extra launches should reuse the first one.
 if (!gotSingleInstanceLock) {
@@ -133,7 +133,7 @@ function createTray() {
 
   const trayImage = nativeImage.createFromPath(trayIconPath).resize({ width: 16, height: 16, quality: "best" });
   tray = new Tray(trayImage.isEmpty() ? trayIconPath : trayImage);
-  tray.setToolTip("ChatPro");
+  tray.setToolTip("chat");
 
   const openApp = () => {
     if (!mainWindow) return;
@@ -145,7 +145,7 @@ function createTray() {
   tray.on("click", openApp);
   tray.setContextMenu(
     Menu.buildFromTemplate([
-      { label: "Open ChatPro", click: openApp },
+      { label: "Open chat", click: openApp },
       {
         label: "Exit",
         click: () => {
