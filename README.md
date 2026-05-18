@@ -54,15 +54,3 @@ cd electron
 npm install
 npm run dev
 ```
-
-## What To Commit
-
-Commit these setup files so another developer can clone and create the MySQL tables easily:
-
-- `README.md`
-- `server/.env.example`
-- `server/database/schema.sql`
-- `server/package.json`
-- `server/package-lock.json`
-
-Do not commit `server/.env` because it can contain local passwords.
