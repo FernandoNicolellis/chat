@@ -18,7 +18,7 @@ From the project root:
 cd server
 cp .env.example .env
 npm install
-npm run db:setup
+npm run db:setup // Might not work in WSL
 ```
 
 When prompted, enter your MySQL root password. If your local MySQL user is not `root`, edit `.env` and run the schema manually with your user:
