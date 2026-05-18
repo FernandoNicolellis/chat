@@ -54,3 +54,18 @@ cd electron
 npm install
 npm run dev
 ```
+
+## Cloning on WSL
+
+If you're using WSL, avoid cloning this repository inside Windows protected folders such as:
+
+- `/mnt/c/Users/<your-user>/Documents`
+- `/mnt/c/Users/<your-user>/Desktop`
+
+Windows Defender, OneDrive, or Controlled Folder Access may block file creation and cause errors like:
+
+```bash
+error: unable to create file ... Permission denied
+fatal: unable to checkout working tree
+
+- Make sure that the schema.sql file exists in server/database
