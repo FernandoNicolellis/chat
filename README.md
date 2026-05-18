@@ -32,7 +32,7 @@ Make sure `.env` matches the database name created by the schema:
 ```env
 DB_NAME=chat
 DB_USER=root
-DB_PASS=
+DB_PASS= <your MYSQL password here>
 DB_HOST=localhost
 DB_DIALECT=mysql
 DB_LOGGING=false
